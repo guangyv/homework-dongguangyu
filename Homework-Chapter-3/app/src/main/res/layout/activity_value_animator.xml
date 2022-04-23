@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".ValueAnimatorActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_like"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/like"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"/>
+
+        <ImageView
+            android:id="@+id/img_coin"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/coin"
+            android:layout_centerInParent="true"/>
+
+        <com.bytedance.jstu.chapter3.CircleProgressBar
+            xmlns:cp="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/circleProgressbar_coin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            cp:radius="26dp"
+            cp:strokeWidth="2dp"
+            cp:ringColor="#FF00BCD4"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/img_collect"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/collect"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="80dp"/>
+
+        <com.bytedance.jstu.chapter3.CircleProgressBar
+            xmlns:cp="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/circleProgressbar_collect"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            cp:radius="26dp"
+            cp:strokeWidth="2dp"
+            cp:ringColor="#FF00BCD4"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="70dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
