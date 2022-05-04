@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Chapter5</string>
+
+    <string name="send_request">查询</string>
+    <string name="hello_android_network">SJTU</string>
+    <string name="input">请输入</string>
+</resources>
