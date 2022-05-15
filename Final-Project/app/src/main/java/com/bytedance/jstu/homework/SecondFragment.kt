@@ -63,15 +63,18 @@ class SecondFragment : Fragment() {
         takePhoto = binding.photo
         publish = binding.publish
 
-        if (!ThirdFragment.isLogined) {
+        val pref = activity!!.getPreferences(AppCompatActivity.MODE_PRIVATE)
+        val isRemember = pref.getBoolean("remember_pw", false)
+
+        if (isRemember || ThirdFragment.isLogined) {
+            record.isEnabled = true
+            takePhoto.isEnabled = true
+            publish.isEnabled = true
+        } else {
             Toast.makeText(activity, "请先登录", Toast.LENGTH_SHORT).show()
             record.isEnabled = false
             takePhoto.isEnabled = false
             publish.isEnabled = false
-        } else {
-            record.isEnabled = true
-            takePhoto.isEnabled = true
-            publish.isEnabled = true
         }
 
         record.setOnClickListener {
@@ -210,6 +213,7 @@ class SecondFragment : Fragment() {
                 }
                 override fun onFailure(call: Call<PostVideoBean>, t: Throwable) {
                     Log.d(TAG, "onFailure: $t")
+                    Toast.makeText(binding.root.context, "上传失败", Toast.LENGTH_SHORT).show()
                 }
             })
     }

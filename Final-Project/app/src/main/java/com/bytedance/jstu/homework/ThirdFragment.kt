@@ -1,7 +1,10 @@
 package com.bytedance.jstu.homework
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +19,14 @@ import kotlin.math.log
 
 class ThirdFragment : Fragment() {
 
+    private val TAG = "ThirdFragment"
+
     private lateinit var account: EditText
     private lateinit var password: EditText
     private lateinit var remember: CheckBox
     private lateinit var login: Button
+    private var isRemember = false
+    private lateinit var pref: SharedPreferences
 
     private var _binding: FragmentThirdBinding? = null
 
@@ -41,8 +48,8 @@ class ThirdFragment : Fragment() {
         remember = binding.remember
         login = binding.login
 
-        val pref = activity!!.getPreferences(AppCompatActivity.MODE_PRIVATE)
-        val isRemember = pref.getBoolean("remember_pw", false)
+        pref = activity!!.getPreferences(AppCompatActivity.MODE_PRIVATE)
+        isRemember = pref.getBoolean("remember_pw", false)
         if (isRemember) {
             account.setText(pref.getString("account", ""))
             password.setText(pref.getString("password", ""))

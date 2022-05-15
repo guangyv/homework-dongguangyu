@@ -21,7 +21,7 @@ class VideoItemAdapter(private val videoList: MutableList<VideoBean.Feeds>): Rec
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {  //绑定数据
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userName = videoList[position].user_name
         val extraValue = videoList[position].extra_value
         val createdAt = videoList[position].createdAt

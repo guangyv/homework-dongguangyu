@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Homework</string>
-    <string name="title_first">first</string>
-    <string name="title_second">second</string>
-    <string name="title_third">third</string>
+    <string name="title_first">视频</string>
+    <string name="title_second">上传</string>
+    <string name="title_third">我的</string>
     <string name="tab_text_1">推荐</string>
     <string name="tab_text_2">我的</string>
     <string name="tab_text_3">tab3</string>
