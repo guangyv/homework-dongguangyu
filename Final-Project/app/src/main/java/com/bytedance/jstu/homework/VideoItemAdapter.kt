@@ -26,17 +26,12 @@ class VideoItemAdapter(private val videoList: MutableList<VideoBean.Feeds>): Rec
         val extraValue = videoList[position].extra_value
         val createdAt = videoList[position].createdAt
         val videoUrl = videoList[position].video_url
-        val imageUrl = videoList[position].image_url
         val video = holder.videoView
-        val videoCover = holder.videoCover
-
         holder.userName.text = "$userName"
         holder.extraValue.text = "$extraValue"
         holder.createdAt.text = "$createdAt"
-        videoCover.setImageURI(Uri.parse(imageUrl))
         video.setVideoURI(Uri.parse(videoUrl))
         video.setOnPreparedListener {
-            videoCover.visibility = View.GONE
             video.start()
         }
         video.setOnCompletionListener {
@@ -64,7 +59,6 @@ class VideoItemAdapter(private val videoList: MutableList<VideoBean.Feeds>): Rec
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val videoView: VideoView = itemView.findViewById(R.id.videoView)
-        val videoCover: ImageView = itemView.findViewById(R.id.videoCover)
         val userName: TextView = itemView.findViewById(R.id.userName)
         val extraValue: TextView = itemView.findViewById(R.id.extraValue)
         val createdAt: TextView = itemView.findViewById(R.id.createdAt)
