@@ -20,10 +20,13 @@ import androidx.fragment.app.Fragment
 import com.bytedance.jstu.homework.databinding.FragmentSecondBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,6 +45,12 @@ class SecondFragment : Fragment() {
     private lateinit var record: Button
     private lateinit var takePhoto: Button
     private lateinit var publish: Button
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://bd-open-lesson.bytedance.com/api/invoke/")
+        .client(OkHttpClient.Builder().build())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
     private var _binding: FragmentSecondBinding? = null
 
@@ -192,18 +201,15 @@ class SecondFragment : Fragment() {
     }
 
     fun publish() {
-        postVideo("admin", "extraValue", takeImagePath, mp4Path)
-    }
-
-    private fun postVideo(userName: String, extraValue: String, imgPath: String, videoPath: String) {
-        val imageFile = File(imgPath)
+        val imageFile = File(takeImagePath)
         val imageBody = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imagePart = MultipartBody.Part.createFormData("cover_image", imageFile.name, imageBody)
-        val videoFile = File(videoPath)
+        val videoFile = File(mp4Path)
         val videoBody = videoFile.asRequestBody("video/mp4".toMediaTypeOrNull())
         val videoPart = MultipartBody.Part.createFormData("video", videoFile.name, videoBody)
-        getRetrofit().create(VideoService::class.java)
-            .postVideo("518051910008_post", userName, extraValue, imagePart, videoPart)
+
+        retrofit.create(VideoService::class.java)
+            .postVideo("518051910008_post", "admin", "extraValue", imagePart, videoPart)
             .enqueue(object : Callback<PostVideoBean> {
                 override fun onResponse(call: Call<PostVideoBean>, response: Response<PostVideoBean>) {
                     if (response.body()?.success == true) {

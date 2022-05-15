@@ -1,7 +1,5 @@
 package com.bytedance.jstu.homework;
 
-import java.util.Date;
-
 public class PostVideoBean {
     
     private boolean success;

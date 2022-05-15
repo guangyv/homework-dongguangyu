@@ -11,9 +11,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bytedance.jstu.homework.databinding.FragmentMainBinding
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.properties.Delegates
 
 /**
@@ -22,6 +25,12 @@ import kotlin.properties.Delegates
 class VideoPagerFragment(private val position: Int) : Fragment() {
 
     private val TAG = "VideoPagerFragment"
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://bd-open-lesson.bytedance.com/api/invoke/")
+        .client(OkHttpClient.Builder().build())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
     private var _binding: FragmentMainBinding? = null
 
@@ -80,35 +89,23 @@ class VideoPagerFragment(private val position: Int) : Fragment() {
     }
 
     private fun getVideo() {
-        if (position == 1) {
-            getRetrofit().create(VideoService::class.java)
-                .getVideo("")
-                .enqueue(object : Callback<VideoBean> {
-                    override fun onResponse(call: Call<VideoBean>, response: Response<VideoBean>) {
-                        val videoList = response.body()!!.feeds
-                        val recyclerViewVideo = binding.recyclerView
-                        recyclerViewVideo.layoutManager = LinearLayoutManager(binding.root.context)
-                        recyclerViewVideo.adapter = VideoItemAdapter(videoList)
-                    }
-                    override fun onFailure(call: Call<VideoBean>, t: Throwable) {
-                        Log.d(TAG, "onFailure: ")
-                    }
-                })
-        } else {
-            getRetrofit().create(VideoService::class.java)
-                .getVideo("518051910008_post")
-                .enqueue(object : Callback<VideoBean> {
-                    override fun onResponse(call: Call<VideoBean>, response: Response<VideoBean>) {
-                        val videoList = response.body()!!.feeds
-                        val recyclerViewVideo = binding.recyclerView
-                        recyclerViewVideo.layoutManager = LinearLayoutManager(binding.root.context)
-                        recyclerViewVideo.adapter = VideoItemAdapter(videoList)
-                    }
-                    override fun onFailure(call: Call<VideoBean>, t: Throwable) {
-                        Log.d(TAG, "onFailure: ")
-                    }
-                })
+        var studentID = ""
+        if (position == 2) {
+            studentID = "518051910008_post"
         }
+        retrofit.create(VideoService::class.java)
+            .getVideo(studentID)
+            .enqueue(object : Callback<VideoBean> {
+                override fun onResponse(call: Call<VideoBean>, response: Response<VideoBean>) {
+                    val videoList = response.body()!!.feeds
+                    val recyclerViewVideo = binding.recyclerView
+                    recyclerViewVideo.layoutManager = LinearLayoutManager(binding.root.context)
+                    recyclerViewVideo.adapter = VideoItemAdapter(videoList)
+                }
+                override fun onFailure(call: Call<VideoBean>, t: Throwable) {
+                    Log.d(TAG, "onFailure: ")
+                }
+            })
     }
 
 }
